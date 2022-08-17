@@ -1,6 +1,10 @@
 import com.raquo.laminar.api.L._
 import org.scalajs.dom
 
+import be.doeraene.webcomponents.ui5.*
+
+import be.doeraene.webcomponents.ui5.configkeys.*
+
 object Frontend {
 
   val myApp = {
@@ -8,13 +12,11 @@ object Frontend {
     val $tick = EventStream.periodic(1000)
 
     div(
-      div(
-        "Tick #: ",
-        child.text <-- $tick.map(_.toString)
-      ),
-      div(
-        "Random #: ",
-        child.text <-- $tick.mapTo((scala.util.Random.nextInt() % 100).toString)
+      Input(
+        _.required := true,
+        _.valueState := ValueState.Information,
+        _.placeholder := "Enter your name",
+        _ => onChange.mapToValue --> Observer(println)
       )
     )
   }
