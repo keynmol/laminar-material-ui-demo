@@ -8,16 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v10
       - name: Build fast and optimised JS
-        run: sbt ';fastLinkJS; fullLinkJS'
+        run: sbt fastLinkJS/esBuild
       - name: Prepare folder for gh-pages
         run: |
-          mkdir -p site/target/scala-2.13
-          cp -r target/scala-2.13/laminar-static-fastopt site/target/scala-2.13
-          cp -r target/scala-2.13/laminar-static-opt site/target/scala-2.13
-          cp index-dev.html site
-          cp index-prod.html site
+          mkdir -p site/target/esbuild
+          cp -r target/esbuild/bundle.js site/target/esbuild/bundle.js
+          cp -r target/esbuild/bundle.js.map site/target/esbuild/bundle.js.map
+          cp index.html site
       - name: Publish gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
