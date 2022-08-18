@@ -22,4 +22,4 @@ scalaJSLinkerConfig ~= { c =>
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-esbuildOptions := Seq("--log-level=debug")
+esbuildOptions ++= Seq("--log-level=debug")
