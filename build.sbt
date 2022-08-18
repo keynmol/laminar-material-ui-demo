@@ -1,3 +1,4 @@
+import org.scalajs.linker.interface.OutputPatterns
 scalaVersion := "3.1.3"
 
 enablePlugins(ScalaJSPlugin, EsbuildPlugin)
@@ -15,4 +16,10 @@ Compile / npmDependencies ++= Seq(
 resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "com.github.sherpal" % "LaminarSAPUI5Bindings" % "1.3.0-7ce0fe34"
 
-scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) }
+scalaJSLinkerConfig ~= { c =>
+  c.withModuleKind(ModuleKind.CommonJSModule).withClosureCompiler(true)
+}
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+esbuildOptions := Seq("--log-level=debug")
